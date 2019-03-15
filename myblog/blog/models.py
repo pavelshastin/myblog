@@ -51,5 +51,4 @@ class Entry(models.Model):
         return self.headline
 
 
-# http://joxi.ru/a2XXEYxi1N8n02 загрузка данных
-# http://joxi.ru/eAOdG6lTxJYQQr вывод данных
+
