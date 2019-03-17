@@ -119,9 +119,7 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/2.1/howto/static-files/
 
-STATIC_URL = 'blog/'
+STATIC_URL = '/static/'
 
-STATICFILES_DIRS = [
-    "C:/python/myblog/myblog/static/",
-    "C:/python/myblog/myblog/static/blog"
-]
+AUTH_USER_MODEL = 'blog.MyUser'
+
