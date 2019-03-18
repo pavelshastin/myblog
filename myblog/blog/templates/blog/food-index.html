@@ -1,4 +1,5 @@
 {% load static %}
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -29,7 +30,7 @@
     <link href="{% static 'blog/css/font-awesome.min.css' %}" rel="stylesheet">
 
     <!-- Custom styles for this template -->
-    <link href="{% static 'blog/style.css" rel="stylesheet">
+    <link href="{% static 'blog/style.css' %}" rel="stylesheet">
 
     <!-- Responsive styles for this template -->
     <link href="{% static 'blog/css/responsive.css' %}" rel="stylesheet">
@@ -91,12 +92,16 @@
 
         <section class="section lb text-muted">
             <div class="container">
+
                 <div class="row grid-style">
+
+                    {% if first_row_reciepts %}
+                    {% for reciept in first_row_reciepts %}
                     <div class="col-lg-3 col-md-6 col-sm-12 col-xs-12">
                         <div class="blog-box">
                             <div class="post-media">
                                 <a href="food-single.html" title="">    
-                                    <span class="detail veg">Veg</span>
+
                                     <img src="{% static 'blog/upload/blog_square_10.jpg' %}" alt="" class="img-fluid">
                                     <div class="hovereffect"></div>
                                 </a>
@@ -104,97 +109,69 @@
 
                             <div class="blog-meta big-meta">
                                 <div class="rating">
-                                    <i class="fa fa-star"></i>
-                                    <i class="fa fa-star"></i>
-                                    <i class="fa fa-star"></i>
-                                    <i class="fa fa-star"></i>
-                                    <i class="fa fa-star"></i>
+                                    {% for star in reciept.raiting %}
+                                        <i class="fa fa-star"></i>
+                                    {% endfor %}
                                 </div>
-                                <h4><a href="food-single.html" title="">Eggplant meat broth</a></h4>
-                                <p>Aenean interdum arcu blandit, vehicula magna non, placerat et pharetratortor.</p>
-                                <small><a href="food-single.html" title="">18 July, 2017</a></small>
-                                <small><a href="#" title="">by Matilda</a></small>
+                                <h4><a href="/posts/{{ reciept.id }}" title="">{{ reciept.title|title }}</a></h4>
+                                <p>{{ reciept.text | truncatewords:12 }}</p>
+                                <small><a href="/blog/post/{{ reciept.id }}" title="">{{ reciept.modified_date | date:'d M Y' }}</a></small>
+                                <small><a href="#" title="">by {{ reciept.author }}</a></small>
                             </div><!-- end meta -->
                         </div><!-- end blog-box -->
                     </div><!-- end col -->
 
-                    <div class="col-lg-3 col-md-6 col-sm-12 col-xs-12">
-                        <div class="blog-box">
-                            <div class="post-media">
-                                <a href="food-single.html" title="">
-                                    <img src="{% static 'blog/upload/blog_square_12.jpg' %}" alt="" class="img-fluid">
-                                    <div class="hovereffect"></div>
-                                </a>
-                            </div><!-- end media -->
+                    {% endfor %}
+                    {% endif %}
+                </div> <!-- end row -->
 
-                            <div class="blog-meta big-meta">
-                                <div class="rating">
-                                    <i class="fa fa-star"></i>
-                                    <i class="fa fa-star"></i>
-                                    <i class="fa fa-star"></i>
-                                    <i class="fa fa-star"></i>
-                                    <i class="fa fa-star"></i>
-                                </div>
-                                <h4><a href="food-single.html" title="">Vegetable rice recipe</a></h4>
-                                <p>Vhicula magna non, placerat elit. Mauris et pharetratortor sodales urna.</p>
-                                <small><a href="food-single.html" title="">16 July, 2017</a></small>
-                                <small><a href="#" title="">by Matilda</a></small>
-                            </div><!-- end meta -->
-                        </div><!-- end blog-box -->
-                    </div><!-- end col -->
 
-                    <div class="col-lg-3 col-md-6 col-sm-12 col-xs-12">
-                        <div class="blog-box">
-                            <div class="post-media">
-                                <a href="food-single.html" title="">
-                                    <span class="detail nonveg">Non-Veg</span>
-                                    <img src="{% static 'blog/upload/blog_square_13.jpg' %}" alt="" class="img-fluid">
-                                    <div class="hovereffect"></div>
-                                </a>
-                            </div><!-- end media -->
+               <hr class="invis">
 
-                            <div class="blog-meta big-meta">
-                                <div class="rating">
-                                    <i class="fa fa-star"></i>
-                                    <i class="fa fa-star"></i>
-                                    <i class="fa fa-star"></i>
-                                    <i class="fa fa-star"></i>
-                                    <i class="fa fa-star-o"></i>
-                                </div>
-                                <h4><a href="food-single.html" title="">Egg bread</a></h4>
-                                <p>Aenean suspendissea sodales urna. In at augue elit. Vivamus enim nibh ac felis.</p>
-                                <small><a href="food-single.html" title="">15 July, 2017</a></small>
-                                <small><a href="#" title="">by Matilda</a></small>
-                            </div><!-- end meta -->
-                        </div><!-- end blog-box -->
-                    </div><!-- end col -->
-
-                    <div class="col-lg-3 col-md-6 col-sm-12 col-xs-12">
-                        <div class="blog-box">
-                            <div class="post-media">
-                                <a href="food-single.html" title="">
-                                    <img src="{% static 'blog/upload/blog_square_05.jpg' %}" alt="" class="img-fluid">
-                                    <div class="hovereffect"></div>
-                                </a>
-                            </div><!-- end media -->
-
-                            <div class="blog-meta big-meta">
-                                <div class="rating">
-                                    <i class="fa fa-star"></i>
-                                    <i class="fa fa-star"></i>
-                                    <i class="fa fa-star"></i>
-                                    <i class="fa fa-star"></i>
-                                    <i class="fa fa-star"></i>
-                                </div>
-                                <h4><a href="food-single.html" title="">Plenty of creamy sweet</a></h4>
-                                <p>Aenean interdum arcu magna non, placerat elit. Mauris et pharetratortor.</p>
-                                <small><a href="food-single.html" title="">14 July, 2017</a></small>
-                                <small><a href="#" title="">by Matilda</a></small>
-                            </div><!-- end meta -->
-                        </div><!-- end blog-box -->
+                <div class="row">
+                    <div class="col-lg-10 offset-lg-1">
+                        <div class="banner-spot clearfix">
+                            <div class="banner-img">
+                                <img src="{% static 'blog/upload/banner_06.jpg' %}" alt="" class="img-fluid">
+                            </div><!-- end banner-img -->
+                        </div><!-- end banner -->
                     </div><!-- end col -->
                 </div><!-- end row -->
-                
+
+                <hr class="invis3">
+
+
+                <div class="row grid-style">
+                 {% if second_row_reciepts %}
+                 {% for reciept in second_row_reciepts %}
+                    <div class="col-lg-3 col-md-6 col-sm-12 col-xs-12">
+                        <div class="blog-box">
+                            <div class="post-media">
+                                <a href="food-single.html" title="">
+
+                                    <img src="{% static 'blog/upload/blog_square_10.jpg' %}" alt="" class="img-fluid">
+                                    <div class="hovereffect"></div>
+                                </a>
+                            </div><!-- end media -->
+
+                            <div class="blog-meta big-meta">
+                                <div class="rating">
+                                    {% for star in reciept.raiting %}
+                                        <i class="fa fa-star"></i>
+                                    {% endfor %}
+                                </div>
+                                <h4><a href="/posts/{{ reciept.id }}" title="">{{ reciept.title | title}}</a></h4>
+                                <p>{{ reciept.text | truncatewords:12}}</p>
+                                <small><a href="/blog/post/{{ reciept.id }}" title="">{{ reciept.modified_date | date:'d M Y' }}</a></small>
+                                <small><a href="#" title="">by {{ reciept.author }}</a></small>
+                            </div><!-- end meta -->
+                        </div><!-- end blog-box -->
+                    </div><!-- end col -->
+
+                    {% endfor %}
+                    {% endif %}
+                    </div> <!-- end row -->
+
                 <hr class="invis">
 
                 <div class="row">
@@ -209,214 +186,38 @@
 
                 <hr class="invis3">
 
-                <div class="row grid-style">
-                    <div class="col-lg-3 col-md-6 col-sm-12 col-xs-12">
-                        <div class="blog-box">
-                            <div class="post-media">
-                                <a href="food-single.html" title="">
-                                    <img src="{% static 'blog/upload/blog_square_17.jpg' %}" alt="" class="img-fluid">
-                                    <div class="hovereffect"></div>
-                                </a>
-                            </div><!-- end media -->
-
-                            <div class="blog-meta big-meta">
-                                <div class="rating">
-                                    <i class="fa fa-star"></i>
-                                    <i class="fa fa-star"></i>
-                                    <i class="fa fa-star"></i>
-                                    <i class="fa fa-star"></i>
-                                    <i class="fa fa-star"></i>
-                                </div>
-                                <h4><a href="food-single.html" title="">Eggplant meat broth</a></h4>
-                                <p>Aenean interdum arcu blandit, vehicula magna non, placerat et pharetratortor.</p>
-                                <small><a href="food-single.html" title="">18 July, 2017</a></small>
-                                <small><a href="#" title="">by Matilda</a></small>
-                            </div><!-- end meta -->
-                        </div><!-- end blog-box -->
-                    </div><!-- end col -->
-              
-                    <div class="col-lg-3 col-md-6 col-sm-12 col-xs-12">
-                        <div class="blog-box">
-                            <div class="post-media">
-                                <a href="food-single.html" title="">
-                                    <span class="detail veg">Veg</span>
-                                    <img src="{% static 'blog/upload/blog_square_16.jpg' %}" alt="" class="img-fluid">
-                                    <div class="hovereffect"></div>
-                                </a>
-                            </div><!-- end media -->
-
-                            <div class="blog-meta big-meta">
-                                <div class="rating">
-                                    <i class="fa fa-star"></i>
-                                    <i class="fa fa-star"></i>
-                                    <i class="fa fa-star"></i>
-                                    <i class="fa fa-star"></i>
-                                    <i class="fa fa-star"></i>
-                                </div>
-                                <h4><a href="food-single.html" title="">Strawberry ice cream</a></h4>
-                                <p>Suspendissea sodales urna. In at augue elit. Vivamu ac felis tempor odio.</p>
-                                <small><a href="food-single.html" title="">17 July, 2017</a></small>
-                                <small><a href="#" title="">by Matilda</a></small>
-                            </div><!-- end meta -->
-                        </div><!-- end blog-box -->
-                    </div><!-- end col -->
-
-                    <div class="col-lg-3 col-md-6 col-sm-12 col-xs-12">
-                        <div class="blog-box">
-                            <div class="post-media">
-                                <a href="food-single.html" title="">
-                                    <span class="detail veg">Veg</span>
-                                    <img src="{% static 'blog/upload/blog_square_15.jpg' %}" alt="" class="img-fluid">
-                                    <div class="hovereffect"></div>
-                                </a>
-                            </div><!-- end media -->
-
-                            <div class="blog-meta big-meta">
-                                <div class="rating">
-                                    <i class="fa fa-star"></i>
-                                    <i class="fa fa-star"></i>
-                                    <i class="fa fa-star"></i>
-                                    <i class="fa fa-star"></i>
-                                    <i class="fa fa-star"></i>
-                                </div>
-                                <h4><a href="food-single.html" title="">French fried breakfast</a></h4>
-                                <p>Vhicula magna non, placerat elit. Mauris et pharetratortor sodales urna.</p>
-                                <small><a href="food-single.html" title="">16 July, 2017</a></small>
-                                <small><a href="#" title="">by Matilda</a></small>
-                            </div><!-- end meta -->
-                        </div><!-- end blog-box -->
-                    </div><!-- end col -->
-
-                    <div class="col-lg-3 col-md-6 col-sm-12 col-xs-12">
-                        <div class="blog-box">
-                            <div class="post-media">
-                                <a href="food-single.html" title="">
-                                    <span class="detail nonveg">Non-Veg</span>
-                                    <img src="{% static 'blog/upload/blog_square_14.jpg' %}" alt="" class="img-fluid">
-                                    <div class="hovereffect"></div>
-                                </a>
-                            </div><!-- end media -->
-
-                            <div class="blog-meta big-meta">
-                                <div class="rating">
-                                    <i class="fa fa-star"></i>
-                                    <i class="fa fa-star"></i>
-                                    <i class="fa fa-star"></i>
-                                    <i class="fa fa-star"></i>
-                                    <i class="fa fa-star-o"></i>
-                                </div>
-                                <h4><a href="food-single.html" title="">Fried steak with sauce</a></h4>
-                                <p>Aenean suspendissea sodales urna. In at augue elit. Vivamus enim nibh ac felis.</p>
-                                <small><a href="food-single.html" title="">15 July, 2017</a></small>
-                                <small><a href="#" title="">by Matilda</a></small>
-                            </div><!-- end meta -->
-                        </div><!-- end blog-box -->
-                    </div><!-- end col -->
-                </div><!-- end row -->
-
-                <hr class="invis3">
 
                 <div class="row grid-style">
-                    <div class="col-lg-3 col-md-6 col-sm-12 col-xs-12">
-                        <div class="blog-box">
-                            <div class="post-media">
-                                <a href="food-single.html" title="">
-                                    <img src="{% static 'blog/upload/blog_square_05.jpg' %}" alt="" class="img-fluid">
-                                    <div class="hovereffect"></div>
-                                </a>
-                            </div><!-- end media -->
+                {% if third_row_reciepts %}
+                {% for reciept in third_row_reciepts %}
+                <div class="col-lg-3 col-md-6 col-sm-12 col-xs-12">
+                    <div class="blog-box">
+                        <div class="post-media">
+                            <a href="food-single.html" title="">
 
-                            <div class="blog-meta big-meta">
-                                <div class="rating">
-                                    <i class="fa fa-star"></i>
-                                    <i class="fa fa-star"></i>
-                                    <i class="fa fa-star"></i>
-                                    <i class="fa fa-star"></i>
-                                    <i class="fa fa-star"></i>
-                                </div>
-                                <h4><a href="food-single.html" title="">Plenty of creamy sweet</a></h4>
-                                <p>Aenean interdum arcu magna non, placerat elit. Mauris et pharetratortor.</p>
-                                <small><a href="food-single.html" title="">14 July, 2017</a></small>
-                                <small><a href="#" title="">by Matilda</a></small>
-                            </div><!-- end meta -->
-                        </div><!-- end blog-box -->
-                    </div><!-- end col -->
-              
-                    <div class="col-lg-3 col-md-6 col-sm-12 col-xs-12">
-                        <div class="blog-box">
-                            <div class="post-media">
-                                <a href="food-single.html" title="">
-                                    <img src="{% static 'blog/upload/blog_square_09.jpg' %}" alt="" class="img-fluid">
-                                    <div class="hovereffect"></div>
-                                </a>
-                            </div><!-- end media -->
+                                <img src="{% static 'blog/upload/blog_square_10.jpg' %}" alt="" class="img-fluid">
+                                <div class="hovereffect"></div>
+                            </a>
+                        </div><!-- end media -->
 
-                            <div class="blog-meta big-meta">
-                                <div class="rating">
+                        <div class="blog-meta big-meta">
+                            <div class="rating">
+                                {% for star in reciept.raiting %}
                                     <i class="fa fa-star"></i>
-                                    <i class="fa fa-star"></i>
-                                    <i class="fa fa-star"></i>
-                                    <i class="fa fa-star"></i>
-                                    <i class="fa fa-star"></i>
-                                </div>
-                                <h4><a href="food-single.html" title="">Banana chocolate cake</a></h4>
-                                <p>Suspendissea urna augue elit. Vivamus enim nibh, maximus ac felis tempor odio.</p>
-                                <small><a href="food-single.html" title="">13 July, 2017</a></small>
-                                <small><a href="#" title="">by Matilda</a></small>
-                            </div><!-- end meta -->
-                        </div><!-- end blog-box -->
-                    </div><!-- end col -->
+                                {% endfor %}
+                            </div>
+                            <h4><a href="/posts/{{ reciept.id }}" title="">{{ reciept.title | title }}</a></h4>
+                            <p>{{ reciept.text | truncatewords:12 }}</p>
+                            <small><a href="/blog/post/{{ reciept.id }}" title="">{{ reciept.modified_date | date:'d M Y' }}</a></small>
+                            <small><a href="#" title="">by {{ reciept.author }}</a></small>
+                        </div><!-- end meta -->
+                    </div><!-- end blog-box -->
+                </div><!-- end col -->
 
-                    <div class="col-lg-3 col-md-6 col-sm-12 col-xs-12">
-                        <div class="blog-box">
-                            <div class="post-media">
-                                <a href="food-single.html" title="">
-                                    <img src="{% static 'blog/upload/blog_square_06.jpg' %}" alt="" class="img-fluid">
-                                    <div class="hovereffect"></div>
-                                </a>
-                            </div><!-- end media -->
+                {% endfor %}
+                {% endif %}
+                </div> <!-- end row -->
 
-                            <div class="blog-meta big-meta">
-                                <div class="rating">
-                                    <i class="fa fa-star"></i>
-                                    <i class="fa fa-star"></i>
-                                    <i class="fa fa-star"></i>
-                                    <i class="fa fa-star"></i>
-                                    <i class="fa fa-star"></i>
-                                </div>
-                                <h4><a href="food-single.html" title="">Apple cake recipe</a></h4>
-                                <p>Vhicula mag, placerat elit. Mauris et pharetratortor. Suspendissea sodales urna.</p>
-                                <small><a href="food-single.html" title="">12 July, 2017</a></small>
-                                <small><a href="#" title="">by Matilda</a></small>
-                            </div><!-- end meta -->
-                        </div><!-- end blog-box -->
-                    </div><!-- end col -->
-
-                    <div class="col-lg-3 col-md-6 col-sm-12 col-xs-12">
-                        <div class="blog-box">
-                            <div class="post-media">
-                                <a href="food-single.html" title="">
-                                    <img src="{% static 'blog/upload/blog_square_07.jpg' %}" alt="" class="img-fluid">
-                                    <div class="hovereffect"></div>
-                                </a>
-                            </div><!-- end media -->
-
-                            <div class="blog-meta big-meta">
-                                <div class="rating">
-                                    <i class="fa fa-star"></i>
-                                    <i class="fa fa-star"></i>
-                                    <i class="fa fa-star"></i>
-                                    <i class="fa fa-star"></i>
-                                    <i class="fa fa-star-o"></i>
-                                </div>
-                                <h4><a href="food-single.html" title="">Garlic sweet recipe</a></h4>
-                                <p>Aenean suspendissea sodales urna. In at augue elit. Vivamus enim nibh, maximus ac felis.</p>
-                                <small><a href="food-single.html" title="">11 July, 2017</a></small>
-                                <small><a href="#" title="">by Matilda</a></small>
-                            </div><!-- end meta -->
-                        </div><!-- end blog-box -->
-                    </div><!-- end col -->
-                </div><!-- end row -->
 
                 <hr class="invis">
 
@@ -434,6 +235,7 @@
                         </nav>
                     </div><!-- end col -->
                 </div><!-- end row -->
+
             </div><!-- end container -->
         </section><!-- end album -->
 
@@ -472,10 +274,10 @@
 
     <!-- Core JavaScript
     ================================================== -->
-    <script src="js/jquery.min.js"></script>
-    <script src="js/tether.min.js"></script>
-    <script src="js/bootstrap.min.js"></script>
-    <script src="js/custom.js"></script>
+    <script src="{% static 'blog/js/jquery.min.js' %}"></script>
+    <script src="{% static 'blog/js/tether.min.js' %}"></script>
+    <script src="{% static 'blog/js/bootstrap.min.js' %}"></script>
+    <script src="{% static 'blog/js/custom.js' %}"></script>
 
 </body>
 </html>
