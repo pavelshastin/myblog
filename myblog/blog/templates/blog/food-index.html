@@ -108,12 +108,14 @@
                     {{ year }}
                     <ul>
                     {% for month_str, month_num in months.items %}
-                        <li><a href="{% url 'reciepts_month' year=year month=month_num">{{ month_str }}</a></li>
+                        <li><a href="{% url 'reciepts_month' year=year month=month_num %}">{{ month_str }}</a></li>
                     {% endfor %}
                     </ul>
                 {% endif %}
 
-
+                {% if month_reciepts %}
+                    {% include "blog/month_posts.html" with reciepts=month_reciepts %}
+                {% endif %}
 
 
             </div><!-- end container -->

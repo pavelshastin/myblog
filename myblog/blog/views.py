@@ -1,5 +1,5 @@
 from django.shortcuts import render, get_object_or_404, get_list_or_404
-from django.http import HttpResponse
+from django.http import HttpResponse, Http404
 from .models import Post, Comment
 from django.utils import timezone
 import datetime
@@ -35,5 +35,14 @@ def reciepts_year(request, year=2019):
     print("months", months)
     return render(request, 'blog/food-index.html', {'year': year, 'months': months})
 
-def reciepts_month(request, year=2019, month=0):
-    pass
+
+def reciepts_month(request, year=2019, month=1):
+
+    try:
+        reciepts = Post.objects.filter(modified_date__year=year).filter(modified_date__month=month)
+    except:
+        raise Http404("No MyModel matches the given query.")
+
+    print(reciepts)
+
+    return render(request, 'blog/food-index.html', {"month_reciepts": reciepts})
