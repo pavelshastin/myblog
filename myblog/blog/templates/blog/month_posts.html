@@ -1,6 +1,7 @@
 {% load static %}
-            
-            <div class="row grid-style">
+    <h3>{{ reciepts.0.modified_date | date:"F Y" }}</h3>
+
+        <div class="row grid-style">
 
                     {% if reciepts %}
                     {% for reciept in reciepts %}
