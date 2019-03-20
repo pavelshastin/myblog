@@ -1,7 +1,7 @@
 from django.shortcuts import render, get_object_or_404, get_list_or_404
 from django.http import HttpResponseRedirect, Http404
 from django.utils import timezone
-from django.contrib.auth import authenticate, login as _login, logout as _logout
+from django.contrib.auth import authenticate, login as _login, logout as _logout, get_user_model
 import datetime
 
 from .models import Post, Comment
@@ -92,11 +92,29 @@ def logout(request):
 def register(request):
 
     if request.method == "POST":
-        form = RegisterForm(request.Post)
+        form = RegisterForm(request.POST)
 
         if form.is_valid():
+            if request.POST["password"] != request.POST["password2"]:
 
-            return HttpResponseRedirect('')
+                return render(request, 'blog/food-index.html', {'register_form': form})
+
+            print("username", request.POST["username"])
+            User = get_user_model() # because you changed your user model see AUTH_USER_MODEL in settings.py
+
+            user = User.objects.create_user(request.POST["username"],
+                                           request.POST["email"],
+                                           request.POST["password"])
+
+            user.first_name = request.POST["first_name"]
+            user.last_name = request.POST["last_name"]
+
+            user.save()
+
+            _login(request, user)
+
+            return HttpResponseRedirect('/')
+
     else:
         form = RegisterForm()
 
