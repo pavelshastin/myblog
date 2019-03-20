@@ -83,7 +83,24 @@
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link" href="food-contact.html">Contact Me</a>
-                            </li>  
+                            </li>
+
+                            {% if user.is_authenticated %}
+                                <li class="nav-item" style="border-right: 2px solid white">
+                                    <a class="nav-link" href="#">{{ user.username }}</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="{% url 'logout' %}">Log Out</a>
+                                </li>
+                            {% else %}
+                                <li class="nav-item" style="border-right: 2px solid white">
+                                    <a class="nav-link" href="{% url 'login' %}">Log In</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="{% url 'register' %}">Register</a>
+                                </li>
+                            {% endif %}
+
                         </ul>
                     </div>
                 </nav>
@@ -115,6 +132,14 @@
 
                 {% if month_reciepts %}
                     {% include "blog/month_posts.html" with reciepts=month_reciepts %}
+                {% endif %}
+
+                {% if login_form %}
+                    {% include "blog/login_form.html" with form=login_form %}
+                {% endif %}
+
+                {% if register_form %}
+                    {% include "blog/register_form.html" with form=register_form %}
                 {% endif %}
 
 

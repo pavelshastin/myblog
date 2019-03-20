@@ -1,8 +1,11 @@
 from django.shortcuts import render, get_object_or_404, get_list_or_404
-from django.http import HttpResponse, Http404
-from .models import Post, Comment
+from django.http import HttpResponseRedirect, Http404
 from django.utils import timezone
+from django.contrib.auth import authenticate, login as _login, logout as _logout
 import datetime
+
+from .models import Post, Comment
+from .forms import RegisterForm, LoginForm
 
 def index(request):
     last_reciepts = Post.objects.order_by('-published_date')[0:12]
@@ -31,9 +34,8 @@ def reciepts_year(request, year=2019):
         month_num = rec.modified_date.strftime("%m")
         months.update({month_str: month_num})
 
-
-    print("months", months)
     return render(request, 'blog/food-index.html', {'year': year, 'months': months})
+
 
 
 def reciepts_month(request, year=2019, month=1):
@@ -46,3 +48,56 @@ def reciepts_month(request, year=2019, month=1):
     print(reciepts)
 
     return render(request, 'blog/food-index.html', {"month_reciepts": reciepts})
+
+
+
+def login(request):
+
+    if request.method == "POST":
+        username = request.POST['username']
+        password = request.POST['password']
+        user = authenticate(username=username, password=password)
+
+        print("username", username, password, user)
+
+        if user is not None:
+            if user.is_active:
+                _login(request, user)
+                return HttpResponseRedirect('/')
+            else:
+                pass
+
+    else:
+        if request.user.is_authenticated:
+            return HttpResponseRedirect("/")
+        else:
+            form = LoginForm()
+
+    return render(request, 'blog/food-index.html', {'login_form': form})
+
+
+
+def logout(request):
+    if request.user.is_authenticated:
+        _logout(request)
+        return HttpResponseRedirect("/")
+    else:
+        pass
+
+    return HttpResponseRedirect("/")
+
+
+
+
+def register(request):
+
+    if request.method == "POST":
+        form = RegisterForm(request.Post)
+
+        if form.is_valid():
+
+            return HttpResponseRedirect('')
+    else:
+        form = RegisterForm()
+
+    return render(request, 'blog/food-index.html', {'register_form': form})
