@@ -117,9 +117,9 @@ def register(request):
         form = RegisterForm(request.POST)
 
         if form.is_valid():
-            if request.POST["password"] != request.POST["password2"]:
-
-                return render(request, 'blog/food-index.html', {'register_form': form})
+            # if request.POST["password"] != request.POST["password2"]:
+            #
+            #     return render(request, 'blog/food-index.html', {'register_form': form})
 
             print("username", request.POST["username"])
             User = get_user_model() # because you changed your user model see AUTH_USER_MODEL in settings.py

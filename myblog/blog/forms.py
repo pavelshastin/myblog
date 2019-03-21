@@ -16,6 +16,14 @@ class RegisterForm(forms.Form):
     last_name = forms.CharField(max_length=100, label=False, required=False,
                                 widget=forms.TextInput(attrs={'placeholder': 'Last Name', 'class': 'form-control'}))
 
+    def clean(self):
+        cleaned_data = super().clean()
+        pswd = cleaned_data["password"]
+        pswd2 = cleaned_data["password2"]
+
+        if pswd != pswd2:
+            raise forms.ValidationError("Passwords in two fields are not equal", code="invalid")
+
 
 class LoginForm(forms.Form):
     username = forms.CharField(max_length=100, required=True, label=False,
