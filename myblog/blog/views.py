@@ -5,7 +5,7 @@ from django.contrib.auth import authenticate, login as _login, logout as _logout
 import datetime
 
 from .models import Post, Comment
-from .forms import RegisterForm, LoginForm
+from .forms import RegisterForm, LoginForm, CommentForm
 
 def index(request):
     last_reciepts = Post.objects.order_by('-published_date')[0:12]
@@ -19,8 +19,30 @@ def index(request):
 
 def detail(request, post_id=1):
     post = get_object_or_404(Post, pk=post_id)
+    comments = post.comment_set.all()
 
-    return render(request, 'blog/food-index.html', {'post': post})
+
+    if request.method == "POST":
+        form = CommentForm()
+
+        # if form.is_valid():
+        User = get_user_model()
+
+        comment = Comment()
+        comment.author = User.objects.get(pk=request.user.id)
+        comment.post = Post.objects.get(pk=post_id)
+        comment.text = request.POST["comment"]
+
+        comment.save()
+
+    else:
+        if request.user.is_authenticated:
+            form = CommentForm()
+        else:
+            form = None
+
+    post.n_comments = post.comment_set.count()
+    return render(request, 'blog/food-index.html', {'post': post, 'comments': comments, 'form': form})
 
 
 

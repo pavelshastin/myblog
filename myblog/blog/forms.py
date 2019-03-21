@@ -22,3 +22,8 @@ class LoginForm(forms.Form):
                                widget=forms.TextInput(attrs={'placeholder': 'Username', 'class': 'form-control'}))
     password = forms.CharField(required=True, label=False,
                                widget=forms.PasswordInput(attrs={'placeholder': 'Password', 'class': 'form-control'}))
+
+
+class CommentForm(forms.Form):
+    comment = forms.CharField(required=True, label=False,
+                                widget=forms.Textarea(attrs={'cols': '80', 'rows': '4'}))
