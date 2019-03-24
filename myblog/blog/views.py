@@ -2,13 +2,16 @@ from django.shortcuts import render, get_object_or_404, get_list_or_404
 from django.http import HttpResponseRedirect, Http404
 from django.utils import timezone
 from django.contrib.auth import authenticate, login as _login, logout as _logout, get_user_model
+from django.shortcuts import get_object_or_404, get_list_or_404
 import datetime
 
 from .models import Post, Comment
 from .forms import RegisterForm, LoginForm, CommentForm
 
+
+
 def index(request):
-    last_reciepts = Post.objects.order_by('-published_date')[0:12]
+    last_reciepts = get_list_or_404(Post.objects.get_last_reciepts())
 
     context = {'first_row_reciepts': last_reciepts[:4],
                'second_row_reciepts': last_reciepts[4:8],
@@ -18,22 +21,19 @@ def index(request):
     return render(request, "blog/food-index.html", context)
 
 def detail(request, post_id=1):
-    post = get_object_or_404(Post, pk=post_id)
-    comments = post.comment_set.all()
+
+    post = get_object_or_404(Post.objects.get_reciept_by_id(post_id))
+    comments = post.get_comments()
 
 
     if request.method == "POST":
-        form = CommentForm()
+        form = CommentForm(request.POST)
 
-        # if form.is_valid():
-        User = get_user_model()
+        if form.is_valid():
 
-        comment = Comment()
-        comment.author = User.objects.get(pk=request.user.id)
-        comment.post = Post.objects.get(pk=post_id)
-        comment.text = request.POST["comment"]
+            Comment().add(post, request.user, request.POST['comment'], timezone.now())
 
-        comment.save()
+            form = CommentForm() # return empty form to clean it's fields after submit
 
     else:
         if request.user.is_authenticated:
@@ -41,14 +41,13 @@ def detail(request, post_id=1):
         else:
             form = None
 
-    post.n_comments = post.comment_set.count()
     return render(request, 'blog/food-index.html', {'post': post, 'comments': comments, 'form': form})
 
 
 
-def reciepts_year(request, year=2019):
+def reciepts_year(request, year=timezone.now().year):
 
-    reciepts = get_list_or_404(Post, modified_date__year=year)
+    reciepts = get_list_or_404(Post.objects.get_reciepts_year(year))
     months = {}
 
     for rec in reciepts:
@@ -59,15 +58,9 @@ def reciepts_year(request, year=2019):
     return render(request, 'blog/food-index.html', {'year': year, 'months': months})
 
 
+def reciepts_month(request, year=timezone.now().year, month=timezone.now().month):
 
-def reciepts_month(request, year=2019, month=1):
-
-    try:
-        reciepts = Post.objects.filter(modified_date__year=year).filter(modified_date__month=month)
-    except:
-        raise Http404("No MyModel matches the given query.")
-
-    print(reciepts)
+    reciepts = get_list_or_404(Post.objects.get_reciepts_month(year, month))
 
     return render(request, 'blog/food-index.html', {"month_reciepts": reciepts})
 
