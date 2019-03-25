@@ -2,7 +2,7 @@ from django.test import TestCase
 from django.utils import timezone as tz
 import datetime as dt
 
-from ../models import Post, Comment
+from blog.models import Post, Comment
 
 
 class PostModelTest(TestCase):

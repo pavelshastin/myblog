@@ -31,8 +31,8 @@ class Post(models.Model):
     created_date = models.DateTimeField(default=tz.now)
     published_date = models.DateTimeField(default=tz.now)
     modified_date = models.DateTimeField()
-    n_comments = models.IntegerField(default=10)
-    n_pingback = models.IntegerField(default=10)
+    n_comments = models.IntegerField(default=10, blank=True, null=True)
+    n_pingback = models.IntegerField(default=10, blank=True, null=True)
     rating = models.IntegerField()
 
 
