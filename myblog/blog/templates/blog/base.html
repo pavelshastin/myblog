@@ -109,24 +109,9 @@
 
         <section class="section lb text-muted">
             <div class="container">
+                {% block content %}
 
-
-
-                {% if months %}
-                    {{ year }}
-                    <ul>
-                    {% for month_str, month_num in months.items %}
-                        <li><a href="{% url 'reciepts_month' year=year month=month_num %}">{{ month_str }}</a></li>
-                    {% endfor %}
-                    </ul>
-                {% endif %}
-
-                {% if month_reciepts %}
-                    {% include "blog/month_posts.html" with reciepts=month_reciepts %}
-                {% endif %}
-
-
-
+                {% endblock %}
 
             </div><!-- end container -->
         </section><!-- end album -->

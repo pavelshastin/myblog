@@ -18,7 +18,7 @@ def index(request):
                'third_row_reciepts': last_reciepts[8:]
                }
 
-    return render(request, "blog/food-index.html", context)
+    return render(request, "blog/last_posts.html", context)
 
 def detail(request, post_id=1):
 
@@ -41,7 +41,7 @@ def detail(request, post_id=1):
         else:
             form = None
 
-    return render(request, 'blog/food-index.html', {'post': post, 'comments': comments, 'form': form})
+    return render(request, 'blog/food-single.html', {'post': post, 'comments': comments, 'form': form})
 
 
 
@@ -88,7 +88,7 @@ def login(request):
         else:
             form = LoginForm()
 
-    return render(request, 'blog/food-index.html', {'login_form': form})
+    return render(request, 'blog/login_form.html', {'login_form': form})
 
 
 
@@ -133,4 +133,4 @@ def register(request):
     else:
         form = RegisterForm()
 
-    return render(request, 'blog/food-index.html', {'register_form': form})
+    return render(request, 'blog/register_form.html', {'register_form': form})
